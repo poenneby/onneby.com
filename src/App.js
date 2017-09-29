@@ -1,20 +1,54 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
-import './App.css';
 
 class App extends Component {
+  constructor() {
+    super();
+
+    this.handleScroll = this.handleScroll.bind(this);
+
+    this.state = { dx : 0, dy: -4 };
+  }
+
+  componentDidMount() {
+    window.addEventListener('scroll', this.handleScroll);
+  }
+
+  handleScroll(event) {
+    const scrollTop = event.srcElement.body.scrollTop;
+    const offset = scrollTop;
+    console.log('offset', offset);
+    this.setState({
+      dy : offset
+    });
+  }
+
   render() {
     return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h1 className="App-title">Welcome to React</h1>
-        </header>
-        <p className="App-intro">
-          To get started, edit <code>src/App.js</code> and save to reload.
-        </p>
-      </div>
-    );
+      <svg x="0px" y="0px" viewBox="0 0 1000 1000">
+      <defs>
+      <filter id="B4" x="-150%" width="400%" y="-150%" height="400%">
+      <feOffset in="SourceGraphic" result="pre-red" dx="0" dy={this.state.dy*-1} />
+      <feColorMatrix in="pre-red" type="matrix" result="red" values="0 0 0 0 1
+                                                                     0 0 0 0 0
+                                                                     0 0 0 0 0
+                                                                     0 0 0 1 0"/>
+      <feOffset in="SourceGraphic" result="pre-blue" dx="0" dy={this.state.dy} />
+      <feColorMatrix in="pre-blue" type="matrix" result="blue" values="0 0 0 0 0
+                                                                       0 0 0 0 0
+                                                                       0 0 0 0 1
+                                                                       0 0 0 1 0"/>
+      <feBlend mode="screen" in="red" in2="blue" result="main"/>
+      <feBlend mode="screen" in="main" in2="SourceGraphic"/>
+      </filter>
+      </defs>
+      <text
+        filter="url(#B4)"
+        className="path"
+        id="svg_1"
+        x="200"
+        y="220"
+        fill="#00FF00">ONNEBY.COM</text>
+    </svg>);
   }
 }
 
