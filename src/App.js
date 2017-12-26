@@ -4,19 +4,16 @@ class App extends Component {
   constructor() {
     super();
 
-    this.handleScroll = this.handleScroll.bind(this);
-
-    this.state = { dx : 0, dy: -4 };
+    this.state = { dx : 0, dy: -3 };
   }
 
   componentDidMount() {
     window.addEventListener('scroll', this.handleScroll);
   }
 
-  handleScroll(event) {
-    const scrollTop = event.srcElement.body.scrollTop;
-    const offset = scrollTop;
-    console.log('offset', offset);
+  handleScroll = (event) => {
+    const doc = document.documentElement;
+    const offset = (window.pageYOffset || doc.scrollTop)  - (doc.clientTop || 0);
     this.setState({
       dy : offset
     });
