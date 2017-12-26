@@ -3,8 +3,22 @@ import React, { Component } from 'react';
 class App extends Component {
   constructor() {
     super();
+    const viewPortWidth = window.innerWidth
+      || document.documentElement.clientWidth
+      || document.body.clientWidth;
+    const viewPortHeight = window.innerHeight
+      || document.documentElement.clientHeight
+      || document.body.clientHeight;
 
-    this.state = { dx : 0, dy: -3 };
+    const width = viewPortWidth - (viewPortWidth * 0.16);
+    const height = viewPortHeight - (viewPortHeight * 0.1);
+
+    this.state = {
+      dx: 0,
+      dy: -3,
+      width,
+      height,
+    };
   }
 
   componentDidMount() {
@@ -21,7 +35,7 @@ class App extends Component {
 
   render() {
     return (
-      <svg viewBox="0 0 1000 1000">
+      <svg viewBox={`0 0 ${this.state.width} ${this.state.height}`}>
       <defs>
         <filter id="B4" x="-150%" width="400%" y="-150%" height="400%">
           <feOffset in="SourceGraphic" result="pre-red" dx="0" dy={this.state.dy*-1} />
@@ -41,10 +55,11 @@ class App extends Component {
       <text
         filter="url(#B4)"
         id="svg_1"
+        style={{fontSize: 10 + "vw"}}
         x="50%"
-        y="30%"
-        alignment-baseline="middle"
-        text-anchor="middle"
+        y={this.state.dy + 250}
+        alignmentBaseline="middle"
+        textAnchor="middle"
         fill="#00FF00">ONNEBY.COM</text>
     </svg>);
   }
