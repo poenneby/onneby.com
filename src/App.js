@@ -29,7 +29,8 @@ class App extends Component {
     const doc = document.documentElement;
     const offset = (window.pageYOffset || doc.scrollTop)  - (doc.clientTop || 0);
     this.setState({
-      dy : offset
+      dx : offset * 5,
+      dy : offset,
     });
   }
 
@@ -38,12 +39,12 @@ class App extends Component {
       <svg viewBox={`0 0 ${this.state.width} ${this.state.height}`}>
       <defs>
         <filter id="B4" x="-150%" width="400%" y="-150%" height="400%">
-          <feOffset in="SourceGraphic" result="pre-red" dx="0" dy={this.state.dy*-1} />
+          <feOffset in="SourceGraphic" result="pre-red" dx={this.state.dx*-1} dy={this.state.dy*-1} />
           <feColorMatrix in="pre-red" type="matrix" result="red" values="0 0 0 0 1
                                                                          0 0 0 0 0
                                                                          0 0 0 0 0
                                                                          0 0 0 1 0"/>
-          <feOffset in="SourceGraphic" result="pre-blue" dx="0" dy={this.state.dy} />
+          <feOffset in="SourceGraphic" result="pre-blue" dx={this.state.dx} dy={this.state.dy} />
           <feColorMatrix in="pre-blue" type="matrix" result="blue" values="0 0 0 0 0
                                                                            0 0 0 0 0
                                                                            0 0 0 0 1
