@@ -25,7 +25,7 @@ class App extends Component {
     window.addEventListener('scroll', this.handleScroll);
   }
 
-  handleScroll = (event) => {
+  handleScroll = () => {
     const doc = document.documentElement;
     const offset = (window.pageYOffset || doc.scrollTop)  - (doc.clientTop || 0);
     this.setState({
